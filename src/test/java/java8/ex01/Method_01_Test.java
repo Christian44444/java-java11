@@ -2,7 +2,6 @@ package java8.ex01;
 
 import java.util.List;
 
-import javax.swing.DefaultBoundedRangeModel;
 
 import org.junit.Test;
 

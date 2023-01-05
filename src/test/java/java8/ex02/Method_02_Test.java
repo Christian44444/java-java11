@@ -37,6 +37,7 @@ public class Method_02_Test {
         }
 
         // TODO redéfinir la méthode String format()
+        @Override
         public String format() {
 			return "DaoA"+ IDao.super.format();
 		}

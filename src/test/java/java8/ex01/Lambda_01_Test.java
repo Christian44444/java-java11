@@ -2,10 +2,13 @@ package java8.ex01;
 
 import java8.data.Data;
 import java8.data.Person;
+
+import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 
 /**
@@ -39,8 +42,10 @@ public class Lambda_01_Test {
         List<Person> personList = Data.buildPersonList(100);
 
         // TODO result ne doit contenir que des personnes adultes (age >= 18)
-        List<Person> result = filter(personList, null);
-
+        // Remplaçable par ci dessous PersonPredicate p = (pers) -> pers.getAge() >= 18;
+        // List<Person> result = filter(personList, p);
+        List<Person> result = filter(personList, pers -> pers.getAge() >= 18);
+        
         assert result.size() == 83;
 
         for (Person person : result) {
@@ -56,7 +61,9 @@ public class Lambda_01_Test {
         List<Person> personList = Data.buildPersonList(100);
 
         // TODO result ne doit contenir que des personnes dont le prénom est "first_10"
-        List<Person> result = filter(personList, null);
+        PersonPredicate p2 = (pers) -> pers.getFirstname().equals("first_10"); 
+    
+        List<Person> result = filter(personList, p2);
 
         assert result.size() == 1;
         assert result.get(0).getFirstname().equals("first_10");
@@ -74,7 +81,10 @@ public class Lambda_01_Test {
 
         // TODO result ne doit contenir que les personnes dont l'age est > 49 et dont le hash du mot de passe correspond à la valeur de la variable passwordSha512Hex
         // TODO Pour obtenir le hash d'un mot, utiliser la méthode DigestUtils.sha512Hex(mot)
-        List<Person> result = filter(personList, null);
+        PersonPredicate p3 = (pers) -> pers.getAge() > 49 && DigestUtils.sha512Hex(pers.getPassword()).equals(passwordSha512Hex); 
+        
+        
+        List<Person> result = filter(personList, p3);
 
         assert result.size() == 6;
         for (Person person : result) {
